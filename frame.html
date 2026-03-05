@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MRAID HTML Debug Test Page</title>
+    <style>
+        #AdrHTML {
+            background-color: #fff;
+            z-index: 100
+        }
+
+        #AdrHTML,
+        #collapse {
+            position: absolute;
+            width: 400px;
+            height: 300px;
+            top: 0;
+            left: 0
+        }
+
+        #collapse {
+            display: none;
+            z-index: 200
+        }
+
+        #mainClick {
+            width: 100%;
+            height: 100%;
+            cursor: pointer
+        }
+    </style>
+</head>
+
+<body>
+    <div id="AdrHTML"></div>
+    <div id="collapse">
+        <img src="data:image/gif;base64,R0lGODlhAQABAID/AMDAwAAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt=""
+            id="mainClick">
+    </div>
+    <script>
+        var localParams = {
+            "TrackingEvents": {
+                "click": [""],
+                "impression": []
+            },
+            "additionalViewability": -1,
+            "clickURL": "https://example.com/click-url?sid=1&pz=0&ad=780412&bid=11140669&bt=78&bn=11140669&ntype=0&nid=0&xpid=DPOgQu2nrmfPrAF9tEr5CwOVChc8Z1jNFTuZEtcgcM-RLza5bmf1-eJN73a6Yso42jkXyPBo-1-ec6hUJQq8MAwtJTjPLerJ9pQ&erid=&exss=&exs0=&exs1=&exs2=&exs3=&exs4=&exs5=&exs6=&exs7=&exs8=&custom=&bundleid=&target=_blank&tuid=-1",
+            "hoverButton": 1,
+            "showOnViewOnly": 1,
+            "href": "https://example.com/",
+            "clickTracker": decodeURIComponent(""),
+            "frameUrl": "banner.html"
+        };
+        (function initAdMarking() {
+            try {
+                if (window.AdR && window.AdR.AdMarking) {
+                    new window.AdR.AdMarking({
+                        "ads": {},
+                        containerid: document.querySelector('body'),
+                        erirId: "131213"
+                    });
+                } else {
+                    var script = document.createElement("script");
+                    script.setAttribute('src', 'https://content.adriver.ru/ad-marking.js');
+                    script.setAttribute('charset', 'UTF-8');
+                    function scriptEventHandler(event) {
+                        script.parentNode.removeChild(script);
+                        if (event.type === "error") return;
+                        if (window.AdR) initAdMarking();
+                    }
+                    script.addEventListener("load", scriptEventHandler);
+                    script.addEventListener("error", scriptEventHandler);
+                    document.head.appendChild(script);
+                }
+            } catch (_) { }
+        })();
+    </script>
+    <script src="index.js"></script>
+</body>
+
+</html>
